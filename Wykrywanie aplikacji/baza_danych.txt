@@ -1,0 +1,2 @@
+notepad++.exe;3;23.686737
+Discord.exe;0;0
