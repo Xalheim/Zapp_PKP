@@ -1,0 +1,1 @@
+Plik dla przechowywania przydatnych informacji dla projektów w GLPI.
