@@ -6,7 +6,6 @@ import time
 import keyboard
 from FileSendoff import send_sessions
 
-    # TODO CHECK FOR TIME OF PROCESS STARTUP, IF EXCEEDS PROGRAM TIME, CUT UNTIL THAT POINT!!! IMPORTANT!!!
 def check_process_runtime(process_name):        # TODO implement unique check for processes? and system ignore
     for proc in psutil.process_iter(['pid', 'name', 'create_time']):  # loop checks every process running
         if proc.info['name'] == process_name:
@@ -23,6 +22,8 @@ def save_runtime_to_file(app_name, runtime_start, file_name):
         file.close()
 
     with open('AppCounterUserLogs/' + file_name, 'w') as file:  # file update
+        if runtime_start < programStartTime:
+            runtime_start = programStartTime
         file.writelines(lines)
         file.writelines(f"{app_name},{str(runtime_start)},{str(datetime.datetime.now())}\n")
         file.close()
@@ -40,6 +41,8 @@ def load_runtimes_from_file(file_name):
 
 if __name__ == "__main__":
 
+    programStartTime = datetime.datetime.now()
+
     if not os.path.isdir('AppCounterUserLogs'):
         os.mkdir('AppCounterUserLogs')
 
@@ -49,7 +52,7 @@ if __name__ == "__main__":
 
     with open("RuntimeAddonData.csv", 'r') as csvfile:
         output = [line.strip() for line in csvfile.readlines()]         # read all processes from csv file
-        username = output[0]        # TODO Find a way to differenciate between users without getting the ID from the database (security)
+        username = output[0]        # TODO remove need for username in code
         process_name_list = output[1:]
         csvfile.close()
 
@@ -80,7 +83,7 @@ if __name__ == "__main__":
                 if process_name == line.split(";")[0]:
                     process = line.split(";")[1]
                     print(process)
-                    process_list += [process]   # TODO, for some reason it appends the \n
+                    process_list += [process]   # for some reason it appends the \n
     except NameError:
         print("A Process Name exists that has not been found in the ProcessConverter.csv list, please update to newest version to accomodate the new license\n")
 
