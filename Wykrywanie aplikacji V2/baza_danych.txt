@@ -1,3 +1,0 @@
-notepad++.exe;1;10.838681
-opera.exe;1;32.641377
-mspaint.exe;5;278.63012
