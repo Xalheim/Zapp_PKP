@@ -27,7 +27,7 @@ def send_sessions():
     if dirExists:
         filesToBeSend = os.listdir("./AppCounterUserLogs")
         if len(filesToBeSend) > 0:
-            print(f'List of current files to be sent out:')
+            print(f'List of currently stored files:')
             for filename in filesToBeSend:
                 print(filename)
         else:
@@ -40,7 +40,7 @@ def send_sessions():
 
                 for element in sessions:
                     element = element.replace("\n", "")
-                    _stdout = client.exec_command("cd ./UserSessions; pwd; echo "+str(element)+" >> "+str(file))[1]
+                    _stdout = client.exec_command("cd ./UserSessions; pwd; echo "+str(element)+" >> "+str(username)+"__"+str(file))[1]
 
                 csvfile.close()
             os.remove('AppCounterUserLogs/' + file)

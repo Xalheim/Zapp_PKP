@@ -51,18 +51,16 @@ if __name__ == "__main__":
         exit(1)
 
     with open("RuntimeAddonData.csv", 'r') as csvfile:
-        output = [line.strip() for line in csvfile.readlines()]         # read all processes from csv file
-        username = output[0]        # TODO remove need for username in code
-        process_name_list = output[1:]
+        process_name_list = [line.strip() for line in csvfile.readlines()]         # read all processes from csv file
         csvfile.close()
 
     today_date = datetime.datetime.now().strftime("%Y-%m-%d")
-    file_name = f'{str(username)}__{str(today_date)}__Runtime.csv'
+    file_name = f'{str(today_date)}__Runtime.csv'
 
     if not os.path.isfile("AppCounterUserLogs/"+file_name):
         with open('AppCounterUserLogs/'+file_name, 'w', newline='') as newfile:
             writer = csv.writer(newfile)
-            newfile.write(username+'\n')
+            newfile.write('')
             newfile.close()
 
     if not os.path.isfile('ProcessConverter.csv'):
@@ -73,7 +71,7 @@ if __name__ == "__main__":
         NameToExecList = [line.strip() for line in csvfile.readlines()]
         csvfile.close()
 
-    print(f'Loaded user {username}, loading processes...\n')
+    print(f'Loading processes...\n')
 
     process_list = []
 
