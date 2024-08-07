@@ -1,49 +1,54 @@
 import paramiko
 import os
 
-
+"""
+send_sessions function is responsible for sending sessions to a remote host.
+The user will have to input the username and password for the remote host (ip at later implementation).
+The function attempts to create a directory for the files if one does not exist.
+Afterwards it sends over all the data stored locally, and upon being successfully sent, it removes it from the PC.
+"""
 def send_sessions():
-    host = "192.168.197.150"
+    host = "192.168.197.150"                                                                                            # TODO upon server setup, set host ip to "input" function instead of static variable
     username = input("Podaj login: ")
     password = input("Podaj haslo: ")
 
-    client = paramiko.client.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(host, username=username, password=password)
+    client = paramiko.client.SSHClient()                                                                                # Setup functionality for SSH connection
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())                                                        # Tell paramiko what to do if there's no host key policy
+    client.connect(host, username=username, password=password)                                                          # Initialize connection to server
 
-    _stdout = client.exec_command('if [ -d "UserSessions" ]; then echo "1"; else echo "0"; fi')[1]
-    doesUserSessionsExist = _stdout.read().decode()
+    _stdout = client.exec_command('if [ -d "UserSessions" ]; then echo "1"; else echo "0"; fi')[1]                      # Check if directory for user sessions exists
+    doesUserSessionsExist = _stdout.read().decode()                                                                     # This functioon will read output from server
     dirExists = False
     if int(doesUserSessionsExist[0]) == 1:
         dirExists = True
 
     if not dirExists:
         print("UserSessions directory does not exist. Creating directory.")
-        _stdout = client.exec_command('mkdir UserSessions')[1]
+        _stdout = client.exec_command('mkdir UserSessions')[1]                                                          # Create directory for user sessions
         print(_stdout.read().decode())
         print("Successfully created UserSessions directory")
-        dirExists = True
+        dirExists = True                                                                                                # Change dirExists back to True so the code continues without any problem
 
-    if dirExists:
-        filesToBeSend = os.listdir("./AppCounterUserLogs")
+    if dirExists:                                                                                                       # Main code for file sending
+        filesToBeSend = os.listdir("./AppCounterUserLogs")                                                              # Check if files exist
         if len(filesToBeSend) > 0:
             print(f'List of currently stored files:')
             for filename in filesToBeSend:
-                print(filename)
+                print(filename)                                                                                         # Information for the user about how many files need to be sent
         else:
             print("No files to be sent.\n")
 
-        for file in filesToBeSend:                                       # For every file in the directory, go through contents and send to GLPI, remove afterwards
+        for file in filesToBeSend:                                                                                      # For every file in the directory, go through contents and send to the server
             with open('AppCounterUserLogs/' + file, 'r') as csvfile:
                 sessions = csvfile.readlines()
-                sessions = sessions[1:]             # TODO delete after removing the username from session files
+                sessions = sessions[1:]                                                                                 # TODO delete after removing the username from session files
 
                 for element in sessions:
                     element = element.replace("\n", "")
-                    _stdout = client.exec_command("cd ./UserSessions; pwd; echo "+str(element)+" >> "+str(username)+"__"+str(file))[1]
+                    _stdout = client.exec_command("cd ./UserSessions; pwd; echo "+str(element)+" >> "+str(username)+"__"+str(file))[1]  # Set directory to UserSessions, send data (element) to file (username__file)
 
                 csvfile.close()
-            os.remove('AppCounterUserLogs/' + file)
+            os.remove('AppCounterUserLogs/' + file)                                                                     # Remove file if successful
 
         print("Successfully finished task\nShutting down")
-        client.close()
+        client.close()                                                                                                  # Sever connection to server
