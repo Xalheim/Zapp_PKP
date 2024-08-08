@@ -34,7 +34,7 @@ sudo chown -R www-data:www-data /var/www/html/glpi/plugins/softplg_wtyczka
 sudo chmod -R 775 /var/www/html/glpi/plugins/softplg_wtyczka
 
 6. Zmiana nazwy pluginu:
-mv /var/www/html/glpi/plugins/softplg_wtyczka /var/www/html/glpi/plugins/softplg_wtyczka
+mv /var/www/html/glpi/plugins/softplg_wtyczka /var/www/html/glpi/plugins/softplg
 
 7. Weryfikacja pojawienia się pluginu w GLPi Wtyczki/Zainstalowane
 
