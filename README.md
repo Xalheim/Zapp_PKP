@@ -29,17 +29,14 @@ ll /var/www/html/glpi/plugins
 
 5. Zmiana uprawnien:
 
-sudo chown -R www-data:www-data /var/www/html/glpi/plugins/softplg_wtyczka
+sudo chown -R www-data:www-data /var/www/html/glpi/plugins/softplg
 
-sudo chmod -R 775 /var/www/html/glpi/plugins/softplg_wtyczka
+sudo chmod -R 775 /var/www/html/glpi/plugins/softplg
 
-6. Zmiana nazwy pluginu:
-mv /var/www/html/glpi/plugins/softplg_wtyczka /var/www/html/glpi/plugins/softplg
+6. Weryfikacja pojawienia się pluginu w GLPi Wtyczki/Zainstalowane
 
-7. Weryfikacja pojawienia się pluginu w GLPi Wtyczki/Zainstalowane
+7. Instalacja wtyczki.
 
-8. Instalacja wtyczki.
+8. Aktywacja wtyczki.
 
-9. Aktywacja wtyczki.
-
-10. Weryfikacja pojawienia się w zakładce Wtyczki.
+9. Weryfikacja pojawienia się w zakładce Wtyczki.
