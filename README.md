@@ -18,9 +18,7 @@ W momencie wykrycia pożądanego procesu, jest to notowane oraz przechowywane w 
 
   Instrukcja instalacji wtyczki do glpi
 1. Sciagnij plik zip 'softplg_wtyczka.zip'.
-2. Wstawienie zipa na serwer za pomocą Webmina : ->Tools->Upload and Download->Upload to Server -
-
-Miejsce docelowe /home/adminer/download
+3. Wstawienie zipa na serwer za pomocą Webmina : ->Tools->Upload and Download->Upload to Server - Miejsce docelowe: /home/adminer/download
 4. Rozpakowanie zbioru do katalogu docelowego:
 unzip /home/adminer/download/softplg_wtyczka.zip -d /var/www/html/glpi/plugins
 5. Weryfikacja czy w katalogu jest rozpakowany zbiór softplg_wtyczka:
