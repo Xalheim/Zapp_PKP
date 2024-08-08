@@ -17,17 +17,16 @@ W momencie wykrycia pożądanego procesu, jest to notowane oraz przechowywane w 
 
 
   Instrukcja instalacji wtyczki do glpi
-1. Sciagnij plik zip 'softplg_wtyczka'
-2. Zaloguj sie do serwera
-3. rozpakowanie zbioru do katalogu docelowego
-	unzip /home/adminer/download/main.zip -d /var/www/html/glpi/plugin
-4. weryfikacja czy w katalogu jest rozpakowany zbiór empty-main
-	ll /var/www/html/glpi/plugin
-5. zmiana uprawnien i członkostw
-	sudo chown -R www-data:www-data /var/www/html/glpi/plugin/example-main
-	sudo chmod -R 775 empty /var/www/html/glpi/plugin/example-main
-6. zmiana nazwy pluginu 
+1. Sciagnij plik zip 'softplg_wtyczka.zip'
+2. Wstawienie zipa na serwer za pomocą Webmina : ->Tools->Upload and Download->Upload to Server - Miejsce docelowe /home/adminer/download
+3. Rozpakowanie zbioru do katalogu docelowego - unzip /home/adminer/download/softplg_wtyczka.zip -d /var/www/html/glpi/plugins
+5. Weryfikacja czy w katalogu jest rozpakowany zbiór softplg_wtyczka - ll /var/www/html/glpi/plugins
+6. Zmiana uprawnien
+	sudo chown -R www-data:www-data /var/www/html/glpi/plugins/softplg_wtyczka
+	sudo chmod -R 775 /var/www/html/glpi/plugins/softplg_wtyczka
+7. zmiana nazwy pluginu 
 	mv /var/www/html/glpi/plugin/example-main /var/www/html/glpi/plugin/example
-7. weryfikacja pojawienia się pluginu w GLPi Wtyczki/Zainstalowane
-8. instalacja wtyczki
-9. aktywacja wtyczki
+8. Weryfikacja pojawienia się pluginu w GLPi Wtyczki/Zainstalowane
+9. Instalacja wtyczki
+10. Aktywacja wtyczki
+11. Weryfikacja pojawienia się w zakładce Wtyczki
