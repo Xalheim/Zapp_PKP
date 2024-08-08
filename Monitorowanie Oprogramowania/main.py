@@ -16,14 +16,13 @@ def save_runtime_to_file(save_process_list, runtime_start, file_name):
     with open('AppCounterUserLogs/' + file_name, 'w') as file:
         file.writelines(lines)
         for save_process in save_process_list:                                                                          # Check which time is longer, if process runs longer than the Monitoring App, set value at the Monitoring App runtime
-            if datetime.datetime.strptime(save_process[1] + " " + save_process[2], '%d/%m/%Y %H:%M:%S') < runtime_start:
-                save_process[1] = runtime_start
+            if save_process[1] < runtime_start:
+                save_process[1] = runtime_start.strftime('%d/%m/%Y %H:%M:%S')
             else:
                 save_process[1] = datetime.datetime.strptime(save_process[1] + " " + save_process[2], '%d/%m/%Y %H:%M:%S')
-            save_process[2] = datetime.datetime.now()
 
             print(save_process)                                                                                         # TODO DEBUG PRINT
-            file.writelines(f"{save_process[0]},{save_process[1]},{str(datetime.datetime.now())}\n")                    # Save to csv file
+            file.writelines(f"{save_process[0]},{save_process[1]},{str(datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S'))}\n")                    # Save to csv file
 
         file.close()
 
@@ -55,7 +54,9 @@ if __name__ == "__main__":
         active_processes, disabled_processes = check_processes(process_list)                                            # Call function that analyses past and current processes
         process_list = active_processes                                                                                 # New process list consists of currently running processes
         save_runtime_to_file(disabled_processes, programStartTime, file_name)                                           # Old process list consists of past running processes that do not run anymore, Call function to save such process data to the csv file
-
+        print(active_processes)
+        print('\n')
+        print(disabled_processes)
         if keyboard.is_pressed("ctrl"):                                                                                 # Ctrl program stop check
             print("Session monitoring stopped, attempting to save data.\n")
             save_runtime_to_file(active_processes, programStartTime, file_name)                                         # Call function to save currently running processes
@@ -63,12 +64,12 @@ if __name__ == "__main__":
             send_sessions()                                                                                             # Go to FileSendoff.py, and initiate the file sending procedure
             exit(0)
 
-        print("Finished monitoring. Timer of 30 seconds started\n")
+        print("\rFinished monitoring. Timer of 30 seconds started")
         count = 0
-        while count < 31:                                                                                               # The Monitoring Program will run in delays to not cause performance issues, TODO decide appropriate timing
+        while count < 11:                                                                                               # The Monitoring Program will run in delays to not cause performance issues, TODO decide appropriate timing
             count += 1
             time.sleep(1)
-            print("Checking in {} seconds...".format(31-count))
+            print("Checking in {} seconds...".format(11-count))
             if keyboard.is_pressed("ctrl"):                                                                             # Ctrl program stop check
                 print("Session monitoring stopped, attempting to save data.\n")
                 save_runtime_to_file(active_processes, programStartTime, file_name)                                     # Call function to save currently running processes

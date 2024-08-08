@@ -37,9 +37,11 @@ def activate_process_scan():
         if not wasReplaced:                                                                                                 # If there was no duplicate, add to saved processes
             process_list.append(ps_process)
 
+    final_list = list()
+
     for final_process in process_list:
-        final_process = ' '.join(final_process[0:len(final_process)-2]), datetime.datetime.strptime(final_process[-2] + " " + final_process[-1], '%d/%m/%Y %H:%M:%S')     # First argument is all the process names combined, second argument is two date parts combined into one datetime
-    return process_list
+        final_list.append([' '.join(final_process[0:len(final_process)-2]), datetime.datetime.strptime(final_process[-2] + " " + final_process[-1], '%d/%m/%Y %H:%M:%S')])     # First argument is all the process names combined, second argument is two date parts combined into one datetime
+    return final_list
 
 """
 check_processes uses current_process_list to get a current list of processes, and uses it to compare to past processes.
