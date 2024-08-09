@@ -17,9 +17,9 @@ def save_runtime_to_file(save_process_list, runtime_start, file_name):
         file.writelines(lines)
         for save_process in save_process_list:                                                                          # Check which time is longer, if process runs longer than the Monitoring App, set value at the Monitoring App runtime
             if save_process[1] < runtime_start:
-                save_process[1] = runtime_start.strftime('%d.%m.%Y %H:%M:%S')
+                save_process[1] = runtime_start.strftime('%Y.%m.%d %H:%M:%S')
             else:
-                save_process[1] = datetime.datetime.strptime(save_process[1] + " " + save_process[2], '%d.%m.%Y %H:%M:%S')
+                save_process[1] = datetime.datetime.strptime(save_process[1] + " " + save_process[2], '%Y.%m.%d %H:%M:%S')
 
             print(save_process)                                                                                         # TODO DEBUG PRINT
             file.writelines(f"{save_process[0]},{save_process[1]},{str(datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S'))}\n")                    # Save to csv file
