@@ -42,8 +42,8 @@ def send_sessions():
                 print(f"Trying to send file {file}.\n")
                 for element in sessions:
                     element = element.replace("\n", "")
-                    _stdout = client.exec_command("cd /var/www/html/glpi/plugins/softplg/UserSessions; pwd; echo "+str(element)+" >> "+str(username)+"__"+str(file))[1]  # Set directory to UserSessions, send data (element) to file (username__file)
-
+                    _stdout = client.exec_command("cd /var/www/html/glpi/plugins/softplg/UserSessions; pwd; echo "+str(element)+" >> "+str(username)+"__"+str(file))[1]  # Set directory to UserSessions, send data (element) to file (username__file) TODO Needs write privileges for everyone, potential point of attack for hostile party
+                    print(_stdout.read().decode())
                 csvfile.close()
             os.remove('AppCounterUserLogs/' + file)                                                                     # Remove file if successful TODO delete after some time
 
