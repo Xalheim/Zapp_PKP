@@ -22,7 +22,7 @@ def save_runtime_to_file(save_process_list, runtime_start, file_name):
                 save_process[1] = datetime.datetime.strptime(save_process[1] + " " + save_process[2], '%Y-%m-%d %H:%M:%S')
 
             print(save_process)                                                                                         # TODO DEBUG PRINT
-            file.writelines(f"{save_process[0]},{save_process[1]},{str(datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S'))}\n")                    # Save to csv file
+            file.writelines(f"{save_process[0]},{save_process[1]},{str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n")                    # Save to csv file
 
         file.close()
 

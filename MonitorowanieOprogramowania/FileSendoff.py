@@ -9,7 +9,7 @@ Afterwards it sends over all the data stored locally, and upon being successfull
 """
 def send_sessions():
     host = "192.168.197.150"                                                                                            # TODO upon server setup, set host ip to "input" function instead of static variable
-    username = input("Podaj login: ")
+    username = input("Podaj login: ")                                                                                   # TODO Get the username during the start of the program (have to learn how to), so it sets the saved file properly instantly, otherwise one person can log in and take all the data wrongly for themsleves
     password = input("Podaj haslo: ")
 
     client = paramiko.client.SSHClient()                                                                                # Setup functionality for SSH connection
@@ -43,7 +43,6 @@ def send_sessions():
                 for element in sessions:
                     element = element.replace("\n", "")
                     _stdout = client.exec_command("cd /var/www/html/glpi/plugins/softplg/UserSessions; pwd; echo "+str(element)+" >> "+str(username)+"__"+str(file))[1]  # Set directory to UserSessions, send data (element) to file (username__file) TODO Needs write privileges for everyone, potential point of attack for hostile party
-                    print(_stdout.read().decode())
                 csvfile.close()
             os.remove('AppCounterUserLogs/' + file)                                                                     # Remove file if successful TODO delete after some time
 
