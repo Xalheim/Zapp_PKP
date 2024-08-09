@@ -16,20 +16,18 @@ def send_sessions():
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())                                                        # Tell paramiko what to do if there's no host key policy
     client.connect(host, username=username, password=password)                                                          # Initialize connection to server
 
-    _stdout = client.exec_command('if [ -d "UserSessions" ]; then echo "1"; else echo "0"; fi')[1]                      # Check if directory for user sessions exists
+    _stdout = client.exec_command('if [ -d "/var/www/html/glpi/plugins/softplg/UserSessions" ]; then echo "1"; else echo "0"; fi')[1]                      # Check if directory for user sessions exists
     doesUserSessionsExist = _stdout.read().decode()                                                                     # This functioon will read output from server
     dirExists = False
     if int(doesUserSessionsExist[0]) == 1:
         dirExists = True
 
     if not dirExists:
-        print("UserSessions directory does not exist. Creating directory.")
-        _stdout = client.exec_command('mkdir UserSessions')[1]                                                          # Create directory for user sessions
-        print(_stdout.read().decode())
-        print("Successfully created UserSessions directory")
-        dirExists = True                                                                                                # Change dirExists back to True so the code continues without any problem
+        print("UserSessions directory does not exist. Please make sure that the softplg plugin is installed in the GLPI agent.")
+        client.close()
+        raise FileNotFoundError
 
-    if dirExists:                                                                                                       # Main code for file sending
+    else:                                                                                                               # Main code for file sending
         filesToBeSend = os.listdir("./AppCounterUserLogs")                                                              # Check if files exist
         if len(filesToBeSend) > 0:
             print(f'List of currently stored files:')
@@ -44,10 +42,10 @@ def send_sessions():
                 print(f"Trying to send file {file}.\n")
                 for element in sessions:
                     element = element.replace("\n", "")
-                    _stdout = client.exec_command("cd ./UserSessions; pwd; echo "+str(element)+" >> "+str(username)+"__"+str(file))[1]  # Set directory to UserSessions, send data (element) to file (username__file)
+                    _stdout = client.exec_command("cd /var/www/html/glpi/plugins/softplg/UserSessions; pwd; echo "+str(element)+" >> "+str(username)+"__"+str(file))[1]  # Set directory to UserSessions, send data (element) to file (username__file)
 
                 csvfile.close()
-            os.remove('AppCounterUserLogs/' + file)                                                                     # Remove file if successful
+            os.remove('AppCounterUserLogs/' + file)                                                                     # Remove file if successful TODO delete after some time
 
         print("Successfully finished task\nShutting down")
         client.close()                                                                                                  # Sever connection to server
