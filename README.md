@@ -14,29 +14,3 @@ Będzie tam wyświetlona każda sesja oddzielnie specyficznie dla użytkownika o
 Aplikacja python jest w stanie pobrać wybrane nazwy procesów, po czym będzie sprawdzała regularnie czy są one w danym momencie włączone lub nie.
 
 W momencie wykrycia pożądanego procesu, jest to notowane oraz przechowywane w trakcie działania. W momencie zakończenia programu python lub wyłączeniu procesu, zostaje zapisana informacja do pliku csv, gdzie każda sesja jest oddzielnie przechowywana w każdej linijce, zawierając nazwę, czas startu oraz czas końca.
-
-
-  Instrukcja instalacji wtyczki do glpi
-1. Sciagnij plik zip 'softplg_wtyczka.zip'.
-
-2. Wstawienie zipa na serwer za pomocą Webmina : ->Tools->Upload and Download->Upload to Server - Miejsce docelowe: /home/adminer/download
-
-3. Rozpakowanie zbioru do katalogu docelowego:
-unzip /home/adminer/download/softplg_wtyczka.zip -d /var/www/html/glpi/plugins
-
-4. Weryfikacja czy w katalogu jest rozpakowany zbiór softplg_wtyczka:
-ll /var/www/html/glpi/plugins
-
-5. Zmiana uprawnien:
-
-sudo chown -R www-data:www-data /var/www/html/glpi/plugins/softplg
-
-sudo chmod -R 775 /var/www/html/glpi/plugins/softplg
-
-6. Weryfikacja pojawienia się pluginu w GLPi Wtyczki/Zainstalowane
-
-7. Instalacja wtyczki.
-
-8. Aktywacja wtyczki.
-
-9. Weryfikacja pojawienia się w zakładce Wtyczki.
